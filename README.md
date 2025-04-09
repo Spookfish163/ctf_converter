@@ -1,4 +1,4 @@
-# Data Converter
+# CTF Converter
 
 A Python utility for common cryptographic data format conversions. This tool simplifies working with different data representations frequently encountered in CTF challenges and cybersecurity work.
 
