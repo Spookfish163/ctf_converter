@@ -43,8 +43,15 @@ class Converter:
             binary_list.append(self.d_to_b(i))
         return binary_list
 
-    def decimal_to_hex(self, decimal_list: List[int]) -> str:
-        """Convert a list of decimal values to a hex string."""
+    def decimal_to_hex(self, decimal_list: List[int], as_single_value=False) -> str:
+        """
+        Convert a list of decimal values to a hex string.
+        Args:
+            as_single_value: If True, expects one number instead of a list
+        """
+        if as_single_value:
+            return self.d_to_h(decimal_list)
+
         self._validate_decimal_range(decimal_list)
         hex_string = ""
         for i in decimal_list:
@@ -75,24 +82,18 @@ class Converter:
             binary_list.append(self.d_to_b(decimal))
         return binary_list
 
-    def hex_to_decimal(self, hex_string: str, as_single_value=False, little=False) -> List[int]:
+    def hex_to_decimal(self, hex_string: str, as_single_value=False) -> List[int]:
         """
         Convert a hex string to a list of decimal values.
-
         Args:
             as_single_value: If True, interprets the entire string as one large number
-            little: If True and as_single_value=True, interprets the number as little endian
         """
         try:
             if hex_string.startswith("0x"):
                 hex_string = hex_string[2:]
 
             if as_single_value:
-                if little:
-                    hex_list = [hex_string[i:i+2] for i in range(0, len(hex_string), 2)]
-                    hex_list.reverse()
-                    hex_string = ''.join(hex_list)
-                return [int(hex_string, 16)]
+                return int(hex_string, 16)
 
             hex_list = [hex_string[i:i+2] for i in range(0, len(hex_string), 2)]
             decimal_list = []
